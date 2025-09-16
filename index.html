@@ -82,6 +82,11 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Correction scroll sous header */
+    section {
+      scroll-margin-top: 80px; /* hauteur du header */
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -217,30 +222,26 @@
 
     // Scroll smooth
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{
-        e.preventDefault(); 
-        const id=a.getAttribute('href').slice(1); 
-        if(!id) return; 
-        const el=document.getElementById(id); 
-        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-      })
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        if(!id) return;
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
     });
 
     // Animation fade-slide au scroll
     const sections = document.querySelectorAll('.fade-slide');
-
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if(entry.isIntersecting){
           entry.target.classList.add('visible');
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
-
-    sections.forEach(section => {
-      observer.observe(section);
-    });
+    sections.forEach(section => observer.observe(section));
   </script>
 </body>
 </html>
