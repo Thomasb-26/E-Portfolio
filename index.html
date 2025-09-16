@@ -71,6 +71,17 @@
       to{background-position:0 100px,100px 0}
     }
     @media (max-width:900px){.nav-links{display:none}.mobile-menu{display:inline-block}}
+
+    /* Animation des sections */
+    .fade-slide {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-slide.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -88,6 +99,7 @@
           <a href="#projets">Projets</a>
           <a href="#competences">Compétences</a>
           <a href="#certifications">Certifications</a>
+          <a href="#veille">Veille</a>
           <a href="#interets">Centres d’intérêt</a>
           <a href="#contact">Contact</a>
         </div>
@@ -97,13 +109,13 @@
   </header>
 
   <main class="container">
-    <section id="profil" class="card">
+    <section id="profil" class="card fade-slide">
       <h2>Profil</h2>
       <h1>Thomas BORRAS--DUPUY</h1>
       <p>Étudiant en 2ème année de BTS SIO (option SISR) au lycée Turgot, passionné par les systèmes, les réseaux et la cybersécurité. Je suis motivé pour évoluer dans le domaine IT et contribuer à la sécurisation et à l’optimisation des infrastructures informatiques.</p>
     </section>
 
-    <section id="formations" class="card">
+    <section id="formations" class="card fade-slide">
       <h2>Formations</h2>
       <ul>
         <li><strong>2023–2025</strong> — BTS SIO (SISR) — Lycée Turgot</li>
@@ -111,7 +123,7 @@
       </ul>
     </section>
 
-    <section id="experiences" class="card">
+    <section id="experiences" class="card fade-slide">
       <h2>Expériences</h2>
       <ul>
         <li><strong>Micropole</strong> — Stage support informatique (8 semaines, déc 2023 - jan 2024)<br/>Support technique avancé, résolution d’incidents matériels/logiciels, gestion des tickets avec GLPI, assistance aux utilisateurs, gestion des équipements (attribution, restitution, mises à jour).<br/>Projet de migration des dépôts SVN : inventaire exhaustif, communication avec les collaborateurs via publipostage, migration vers serveur centralisé, archivage des dépôts inactifs, optimisation de l’organisation et réduction des coûts. Suivi et organisation du projet avec Microsoft Teams.</li>
@@ -119,7 +131,7 @@
       </ul>
     </section>
 
-    <section id="projets" class="card">
+    <section id="projets" class="card fade-slide">
       <h2>Projets</h2>
       <ul>
         <li><strong>Migration des dépôts SVN</strong> — Centralisation et archivage des projets SVN pour réduire les coûts et améliorer la gestion. Utilisation d’Active Directory pour les droits d’accès et suivi du projet avec Microsoft Teams.</li>
@@ -127,7 +139,7 @@
       </ul>
     </section>
 
-    <section id="competences" class="card">
+    <section id="competences" class="card fade-slide">
       <h2>Compétences</h2>
       <h3>Systèmes</h3>
       <ul>
@@ -165,7 +177,7 @@
       </ul>
     </section>
 
-    <section id="certifications" class="card">
+    <section id="certifications" class="card fade-slide">
       <h2>Certifications</h2>
       <ul>
         <li><strong>Linux Unhatched</strong> — Cisco Networking Academy<br/>ID : 96d47589-2f3b-4b6d-8a28-ae164932e8ed<br/>Date d’émission : 22 novembre 2024<br/><a href="https://www.credly.com/badges/96d47589-2f3b-4b6d-8a28-ae164932e8ed" target="_blank" style="color:var(--accent);text-decoration:underline">Voir la certification</a></li>
@@ -173,21 +185,22 @@
       </ul>
     </section>
 
-    <section id="veille" class="card">
+    <section id="veille" class="card fade-slide">
       <h2>Veille</h2>
       <p>Exploration de l’intelligence artificielle appliquée aux échecs : analyse de parties, aide à l’entraînement, et perspectives d’utilisation dans le domaine de la cybersécurité.</p>
       <p>Les avancées en IA dans le domaine des échecs illustrent la puissance de l’apprentissage automatique et des algorithmes de renforcement. Elles inspirent également des applications dans la cybersécurité, notamment dans la détection d’intrusions et l’optimisation de stratégies de défense.</p>
     </section>
 
-    <section id="interets" class="card">
+    <section id="interets" class="card fade-slide">
       <h2>Centres d’intérêt</h2>
       <ul>
         <li>Échecs</li>
-        <li>Veille informatique : intelligence artificielle et son rôle dans les échecs</li>
+        <li>Jeux vidéos</li>
+        <li>Musique (concerts)</li>
       </ul>
     </section>
 
-    <section id="contact" class="card">
+    <section id="contact" class="card fade-slide">
       <h2>Contact</h2>
       <p><strong>Email :</strong> <a href="mailto:thomas.borrasd@gmail.com" style="color:var(--accent);text-decoration:underline">thomas.borrasd@gmail.com</a></p>
       <p><a href="ThomasBorrasDupuyCV (2).pdf" download style="color:var(--accent);text-decoration:underline">Télécharger mon CV (PDF)</a></p>
@@ -199,12 +212,35 @@
   </footer>
 
   <script>
+    // Année dynamique
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll smooth
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click',e=>{
-        e.preventDefault(); const id=a.getAttribute('href').slice(1); if(!id) return; const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        e.preventDefault(); 
+        const id=a.getAttribute('href').slice(1); 
+        if(!id) return; 
+        const el=document.getElementById(id); 
+        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
       })
-    })
+    });
+
+    // Animation fade-slide au scroll
+    const sections = document.querySelectorAll('.fade-slide');
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
   </script>
 </body>
 </html>
