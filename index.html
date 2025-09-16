@@ -32,7 +32,19 @@
     nav{display:flex;align-items:center;justify-content:space-between}
     .brand{font-weight:700;font-size:20px;color:var(--accent);text-shadow:0 0 6px var(--glow)}
     .nav-links{display:flex;gap:18px}
-    .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;transition:0.3s}
+    .nav-links a{
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .nav-links a.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
     .nav-links a:hover{color:var(--accent);text-shadow:0 0 8px var(--glow)}
     .card{
       background:var(--card);
@@ -201,47 +213,4 @@
       <ul>
         <li>Échecs</li>
         <li>Jeux vidéos</li>
-        <li>Musique (concerts)</li>
-      </ul>
-    </section>
-
-    <section id="contact" class="card fade-slide">
-      <h2>Contact</h2>
-      <p><strong>Email :</strong> <a href="mailto:thomas.borrasd@gmail.com" style="color:var(--accent);text-decoration:underline">thomas.borrasd@gmail.com</a></p>
-      <p><a href="ThomasBorrasDupuyCV (2).pdf" download style="color:var(--accent);text-decoration:underline">Télécharger mon CV (PDF)</a></p>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">© <span id="year"></span> Thomas BORRAS--DUPUY — Tous droits réservés</div>
-  </footer>
-
-  <script>
-    // Année dynamique
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Scroll smooth
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        e.preventDefault();
-        const id = a.getAttribute('href').slice(1);
-        if(!id) return;
-        const el = document.getElementById(id);
-        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-    });
-
-    // Animation fade-slide au scroll
-    const sections = document.querySelectorAll('.fade-slide');
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    sections.forEach(section => observer.observe(section));
-  </script>
-</body>
-</html>
+        <
