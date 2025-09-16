@@ -7,17 +7,6 @@ document.querySelectorAll('.nav-links a').forEach(a=>{
   });
 });
 
-// Animation sections au scroll
-const sections = document.querySelectorAll('.page-section');
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-    }
-  });
-},{threshold:0.3});
-sections.forEach(s=>observer.observe(s));
-
 // Tracking souris (particules simples)
 const canvas = document.getElementById('cursor-tracking');
 const ctx = canvas.getContext('2d');
@@ -50,3 +39,4 @@ window.addEventListener('resize', ()=>{
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
+
