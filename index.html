@@ -1,142 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portfolio — Thomas BORRAS--DUPUY</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thomas Borras-Dupuy - Portfolio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <div class="brand">Thomas</div>
-    <nav class="nav-links">
+    <div class="brand">Thomas Borras-Dupuy</div>
+    <nav>
       <a href="#profil">Profil</a>
       <a href="#formations">Formations</a>
       <a href="#experiences">Expériences</a>
-      <a href="#projets">Projets</a>
       <a href="#competences">Compétences</a>
       <a href="#certifications">Certifications</a>
       <a href="#veille">Veille</a>
       <a href="#interets">Centres d’intérêt</a>
-      <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main>
-    <!-- Profil -->
     <section id="profil" class="page-section">
-      <h1>Thomas BORRAS--DUPUY</h1>
-      <p>Étudiant en 2ème année de BTS SIO (option SISR) au lycée Turgot, passionné par les systèmes, les réseaux et la cybersécurité. Je suis motivé pour évoluer dans le domaine IT et contribuer à la sécurisation et à l’optimisation des infrastructures informatiques.</p>
+      <h1>Profil</h1>
+      <p>Étudiant en 2ème année de BTS SIO (option SISR) au lycée Turgot, passionné par les systèmes, les réseaux et la cybersécurité...</p>
     </section>
 
-    <!-- Formations -->
     <section id="formations" class="page-section">
       <h1>Formations</h1>
       <ul>
-        <li><strong>2023–2025</strong> — BTS SIO (SISR) — Lycée Turgot</li>
-        <li><strong>2020–2023</strong> — Bac Pro Systèmes Numériques — Lycée Jean Moulin, Chesnay-Rocquencourt (mention bien)</li>
+        <li>2023–2025 — BTS SIO (SISR) — Lycée Turgot</li>
+        <li>2020–2023 — Bac Pro Systèmes Numériques — Lycée Jean Moulin, Chesnay-Rocquencourt (mention bien)</li>
       </ul>
     </section>
 
-    <!-- Expériences -->
     <section id="experiences" class="page-section">
       <h1>Expériences</h1>
-      <ul>
-        <li>
-          <strong>Micropole</strong> — Stage support informatique (8 semaines, déc 2023 - jan 2024)<br>
-          Support technique avancé, résolution d’incidents matériels/logiciels, gestion des tickets avec GLPI, assistance aux utilisateurs, gestion des équipements (attribution, restitution, mises à jour).<br>
-          Projet de migration des dépôts SVN : inventaire exhaustif, communication avec les collaborateurs via publipostage, migration vers serveur centralisé, archivage des dépôts inactifs, optimisation de l’organisation et réduction des coûts. Suivi et organisation du projet avec Microsoft Teams.
-        </li>
-        <li>
-          <strong>Mairie de Garches</strong> — Stage support informatique (4 semaines, juin 2023)<br>
-          Mise en place d’une structure hiérarchique des machines et comptes utilisateurs, gestion et traçabilité, configuration d’outils de communication interne.
-        </li>
-      </ul>
-    </section>
-
-    <!-- Projets -->
-    <section id="projets" class="page-section">
-      <h1>Projets</h1>
-      <ul>
-        <li><strong>Migration des dépôts SVN</strong> — Centralisation et archivage des projets SVN pour réduire les coûts et améliorer la gestion. Utilisation d’Active Directory pour les droits d’accès et suivi du projet avec Microsoft Teams.</li>
-        <li><strong>Création d'un jeu sur navigateur</strong> — Hébergé par un serveur en réseau. Jeu « Devine le Nombre » développé en JavaScript, HTML et CSS.</li>
-      </ul>
-    </section>
-
-    <!-- Compétences -->
-    <section id="competences" class="page-section grid-competences">
-      <div class="competence-block">
-        <h2>Systèmes</h2>
-        <ul>
-          <li>Installation/configuration des OS, équipements</li>
-          <li>Gestion utilisateurs, droits d'accès, fichiers</li>
-          <li>Sécurisation (MAJ, antivirus)</li>
-          <li>Automatisation des tâches (scripts Bash)</li>
-          <li>Surveillance et dépannage</li>
-          <li>Gestion de bases de données</li>
-          <li>Windows, Windows Server, Ubuntu, Debian, Kali, PfSense</li>
-        </ul>
+      <div>
+        <h2>Micropole — Stage support informatique</h2>
+        <p>Support technique avancé, résolution d’incidents matériels/logiciels...</p>
       </div>
-      <div class="competence-block">
-        <h2>Réseaux</h2>
-        <ul>
-          <li>Mise en place LAN, VLAN</li>
-          <li>Configuration routeurs, commutateurs, pare-feu</li>
-          <li>Dépannage, diagnostic, analyse trafic</li>
-          <li>Outils : Cisco, Packet Tracer, PfSense, Wireshark</li>
-        </ul>
-      </div>
-      <div class="competence-block">
-        <h2>Gestion de projet</h2>
-        <ul>
-          <li>Planification, définition objectifs/livrables</li>
-          <li>Gestion ressources, attribution des tâches</li>
-          <li>Suivi délais et réunions</li>
-          <li>Gestion documentation</li>
-          <li>Outils : Kanboard, Gantt, Microsoft Teams</li>
-        </ul>
-      </div>
-      <div class="competence-block">
-        <h2>Cybersécurité</h2>
-        <ul>
-          <li>Protection données personnelles</li>
-          <li>Sensibilisation utilisateurs</li>
-          <li>Surveillance et analyse des logs</li>
-          <li>Gestion mots de passe, détection intrusions</li>
-          <li>Analyse menaces, chiffrement, stéganographie</li>
-          <li>Normes, lois et vocabulaire cybersécurité</li>
-        </ul>
+      <div>
+        <h2>Mairie de Garches — Stage support informatique</h2>
+        <p>Mise en place d’une structure hiérarchique des machines et comptes utilisateurs...</p>
       </div>
     </section>
 
-    <!-- Certifications -->
+    <section id="competences" class="page-section">
+      <h1>Compétences</h1>
+      <div class="grid-competences">
+        <div class="competence-block">
+          <h2>Systèmes</h2>
+          <ul>
+            <li>Installation/configuration des OS, équipements</li>
+            <li>Gestion utilisateurs, droits d'accès, fichiers</li>
+            <li>Sécurisation (MAJ, antivirus)</li>
+            <li>Automatisation des tâches (scripts Bash)</li>
+            <li>Surveillance et dépannage</li>
+            <li>Gestion de bases de données</li>
+            <li>Windows, Windows Server, Ubuntu, Debian, Kali, PfSense</li>
+          </ul>
+        </div>
+        <div class="competence-block">
+          <h2>Réseaux</h2>
+          <ul>
+            <li>Mise en place LAN, VLAN</li>
+            <li>Configuration routeurs, commutateurs, pare-feu</li>
+            <li>Dépannage, diagnostic, analyse trafic</li>
+            <li>Outils : Cisco, Packet Tracer, PfSense, Wireshark</li>
+          </ul>
+        </div>
+        <div class="competence-block">
+          <h2>Gestion de projet</h2>
+          <ul>
+            <li>Planification, définition objectifs/livrables</li>
+            <li>Gestion ressources, attribution des tâches</li>
+            <li>Suivi délais et réunions</li>
+            <li>Gestion documentation</li>
+            <li>Outils : Kanboard, Gantt, Microsoft Teams</li>
+          </ul>
+        </div>
+        <div class="competence-block">
+          <h2>Cybersécurité</h2>
+          <ul>
+            <li>Protection données personnelles</li>
+            <li>Sensibilisation utilisateurs</li>
+            <li>Surveillance et analyse des logs</li>
+            <li>Gestion mots de passe, détection intrusions</li>
+            <li>Analyse menaces, chiffrement, stéganographie</li>
+            <li>Normes, lois et vocabulaire cybersécurité</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <section id="certifications" class="page-section">
       <h1>Certifications</h1>
       <ul>
-        <li>
-          <strong>Linux Unhatched</strong> — Cisco Networking Academy<br>
-          ID : 96d47589-2f3b-4b6d-8a28-ae164932e8ed<br>
-          Date d’émission : 22 novembre 2024<br>
-          <a href="https://www.credly.com/badges/96d47589-2f3b-4b6d-8a28-ae164932e8ed" target="_blank">Voir la certification</a>
-        </li>
-        <li>
-          <strong>Introduction to Cybersecurity</strong> — Cisco Networking Academy<br>
-          ID : a498bcff-7a0f-47ea-966b-5457fb2ea10e<br>
-          Date d’émission : 13 mars 2025<br>
-          <a href="https://www.credly.com/badges/a498bcff-7a0f-47ea-966b-5457fb2ea10e" target="_blank">Voir la certification</a>
-        </li>
+        <li>Linux Unhatched — Cisco Networking Academy</li>
+        <li>Introduction to Cybersecurity — Cisco Networking Academy</li>
       </ul>
     </section>
 
-    <!-- Veille -->
     <section id="veille" class="page-section">
       <h1>Veille</h1>
-      <p>Exploration de l’intelligence artificielle appliquée aux échecs : analyse de parties, aide à l’entraînement, et perspectives d’utilisation dans le domaine de la cybersécurité.</p>
-      <p>Les avancées en IA dans le domaine des échecs illustrent la puissance de l’apprentissage automatique et des algorithmes de renforcement. Elles inspirent également des applications dans la cybersécurité, notamment dans la détection d’intrusions et l’optimisation de stratégies de défense.</p>
+      <p>Exploration de l’intelligence artificielle appliquée aux échecs...</p>
     </section>
 
-    <!-- Centres d’intérêt -->
     <section id="interets" class="page-section">
       <h1>Centres d’intérêt</h1>
       <ul>
@@ -144,13 +114,6 @@
         <li>Jeux vidéos</li>
         <li>Musique (concerts)</li>
       </ul>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="page-section">
-      <h1>Contact</h1>
-      <p>Email: <a href="mailto:thomas.borrasd@gmail.com">thomas.borrasd@gmail.com</a></p>
-      <p><a href="ThomasBorrasDupuyCV (2).pdf" download>Télécharger mon CV (PDF)</a></p>
     </section>
   </main>
 
