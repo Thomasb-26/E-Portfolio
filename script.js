@@ -1,4 +1,3 @@
-
 const root = document.documentElement;
 const header = document.querySelector('.site-header');
 const navToggle = document.querySelector('.nav-toggle');
@@ -239,4 +238,3 @@ window.addEventListener('resize', () => {
 if (canvas && ctx) {
   initCanvas();
 }
-
