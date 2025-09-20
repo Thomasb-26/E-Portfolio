@@ -3,121 +3,364 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thomas Borras-Dupuy - Portfolio</title>
+  <title>Thomas Borras-Dupuy · E-Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="brand">Thomas Borras-Dupuy</div>
-    <nav>
-      <a href="#profil">Profil</a>
-      <a href="#formations">Formations</a>
-      <a href="#experiences">Expériences</a>
-      <a href="#competences">Compétences</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#veille">Veille</a>
-      <a href="#interets">Centres d’intérêt</a>
-    </nav>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header" id="top">
+    <div class="container">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">TB</span>
+        <div class="brand-text">
+          <strong>Thomas Borras-Dupuy</strong>
+          <small>Technicien systèmes & réseaux</small>
+        </div>
+      </div>
+      <button class="nav-toggle" aria-label="Ouvrir le menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <a href="#profil">Profil</a>
+        <a href="#formations">Formations</a>
+        <a href="#experiences">Expériences</a>
+        <a href="#competences">Compétences</a>
+        <a href="#projets">Projets</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#veille">Veille</a>
+        <a href="#interets">Centres d’intérêt</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="theme-toggle" aria-label="Basculer le thème" title="Basculer clair/sombre">
+        <span class="icon-sun" aria-hidden="true">☀️</span>
+        <span class="icon-moon" aria-hidden="true">🌙</span>
+      </button>
+    </div>
   </header>
 
   <main>
-    <section id="profil" class="page-section">
-      <h1>Profil</h1>
-      <p>Étudiant en 2ème année de BTS SIO (option SISR) au lycée Turgot, passionné par les systèmes, les réseaux et la cybersécurité...</p>
-    </section>
-
-    <section id="formations" class="page-section">
-      <h1>Formations</h1>
-      <ul>
-        <li>2023–2025 — BTS SIO (SISR) — Lycée Turgot</li>
-        <li>2020–2023 — Bac Pro Systèmes Numériques — Lycée Jean Moulin, Chesnay-Rocquencourt (mention bien)</li>
-      </ul>
-    </section>
-
-    <section id="experiences" class="page-section">
-      <h1>Expériences</h1>
-      <div>
-        <h2>Micropole — Stage support informatique</h2>
-        <p>Support technique avancé, résolution d’incidents matériels/logiciels...</p>
+    <section id="profil" class="hero-section reveal">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <p class="eyebrow">Bonjour, je suis</p>
+          <h1>Thomas Borras-Dupuy</h1>
+          <p class="lead">Étudiant en deuxième année de <strong>BTS SIO option SISR</strong> au lycée Turgot. Passionné par les infrastructures, la cybersécurité et l’automatisation, j’aime transformer les défis techniques en solutions fiables et sécurisées.</p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#contact">Me contacter</a>
+            <a class="btn secondary" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+          <dl class="quick-facts" aria-label="Informations clés">
+            <div>
+              <dt>Localisation</dt>
+              <dd>Île-de-France, France</dd>
+            </div>
+            <div>
+              <dt>Spécialités</dt>
+              <dd>Systèmes, réseaux, cybersécurité</dd>
+            </div>
+            <div>
+              <dt>Objectif</dt>
+              <dd>Construire et sécuriser des infrastructures agiles</dd>
+            </div>
+          </dl>
+        </div>
+        <aside class="hero-card" aria-label="Points forts">
+          <h2>Atouts principaux</h2>
+          <ul>
+            <li>Culture cybersécurité & conformité RGPD</li>
+            <li>Support technique orienté satisfaction utilisateur</li>
+            <li>Travail collaboratif et conduite de projet agile</li>
+            <li>Veille technologique active sur l’IA et le cloud</li>
+          </ul>
+        </aside>
       </div>
-      <div>
-        <h2>Mairie de Garches — Stage support informatique</h2>
-        <p>Mise en place d’une structure hiérarchique des machines et comptes utilisateurs...</p>
-      </div>
+      <div class="scroll-indicator" aria-hidden="true">Faites défiler</div>
     </section>
 
-    <section id="competences" class="page-section">
-      <h1>Compétences</h1>
-      <div class="grid-competences">
-        <div class="competence-block">
-          <h2>Systèmes</h2>
-          <ul>
-            <li>Installation/configuration des OS, équipements</li>
-            <li>Gestion utilisateurs, droits d'accès, fichiers</li>
-            <li>Sécurisation (MAJ, antivirus)</li>
-            <li>Automatisation des tâches (scripts Bash)</li>
-            <li>Surveillance et dépannage</li>
-            <li>Gestion de bases de données</li>
-            <li>Windows, Windows Server, Ubuntu, Debian, Kali, PfSense</li>
-          </ul>
-        </div>
-        <div class="competence-block">
-          <h2>Réseaux</h2>
-          <ul>
-            <li>Mise en place LAN, VLAN</li>
-            <li>Configuration routeurs, commutateurs, pare-feu</li>
-            <li>Dépannage, diagnostic, analyse trafic</li>
-            <li>Outils : Cisco, Packet Tracer, PfSense, Wireshark</li>
-          </ul>
-        </div>
-        <div class="competence-block">
-          <h2>Gestion de projet</h2>
-          <ul>
-            <li>Planification, définition objectifs/livrables</li>
-            <li>Gestion ressources, attribution des tâches</li>
-            <li>Suivi délais et réunions</li>
-            <li>Gestion documentation</li>
-            <li>Outils : Kanboard, Gantt, Microsoft Teams</li>
-          </ul>
-        </div>
-        <div class="competence-block">
-          <h2>Cybersécurité</h2>
-          <ul>
-            <li>Protection données personnelles</li>
-            <li>Sensibilisation utilisateurs</li>
-            <li>Surveillance et analyse des logs</li>
-            <li>Gestion mots de passe, détection intrusions</li>
-            <li>Analyse menaces, chiffrement, stéganographie</li>
-            <li>Normes, lois et vocabulaire cybersécurité</li>
-          </ul>
+    <section id="formations" class="page-section reveal">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">Parcours académique</p>
+          <h2>Formations</h2>
+        </header>
+        <div class="timeline">
+          <article class="timeline-item">
+            <span class="timeline-date">2023 – 2025</span>
+            <div>
+              <h3>BTS Services Informatiques aux Organisations (SISR)</h3>
+              <p>Lycée Turgot — Architecture réseaux, administration systèmes, cybersécurité, virtualisation et supervision.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <span class="timeline-date">2020 – 2023</span>
+            <div>
+              <h3>Bac Pro Systèmes Numériques — Mention Bien</h3>
+              <p>Lycée Jean Moulin, Chesnay-Rocquencourt — Déploiement d’infrastructures, support utilisateurs, bases de programmation.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="certifications" class="page-section">
-      <h1>Certifications</h1>
-      <ul>
-        <li>Linux Unhatched — Cisco Networking Academy</li>
-        <li>Introduction to Cybersecurity — Cisco Networking Academy</li>
-      </ul>
+    <section id="experiences" class="page-section reveal">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">Expériences en entreprise</p>
+          <h2>Expériences professionnelles</h2>
+        </header>
+        <div class="experience-grid">
+          <article class="experience-card">
+            <header>
+              <h3>Micropole</h3>
+              <span>Stage — Support informatique</span>
+              <time dateTime="2024">2024</time>
+            </header>
+            <ul>
+              <li>Résolution d’incidents matériels et logiciels de niveau 1 & 2.</li>
+              <li>Optimisation de la base de connaissances interne pour réduire les temps de traitement.</li>
+              <li>Mise en place d’indicateurs de suivi de la satisfaction utilisateurs.</li>
+            </ul>
+            <footer>
+              <p class="tag">Environnement : Windows, GLPI, Active Directory</p>
+            </footer>
+          </article>
+          <article class="experience-card">
+            <header>
+              <h3>Mairie de Garches</h3>
+              <span>Stage — Support informatique</span>
+              <time dateTime="2023">2023</time>
+            </header>
+            <ul>
+              <li>Structuration des machines et comptes dans l’Active Directory municipal.</li>
+              <li>Déploiement d’une stratégie de sauvegarde simple pour les équipes métiers.</li>
+              <li>Sensibilisation des agents aux bonnes pratiques de sécurité.</li>
+            </ul>
+            <footer>
+              <p class="tag">Environnement : Windows Server, PfSense, Veeam</p>
+            </footer>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <section id="veille" class="page-section">
-      <h1>Veille</h1>
-      <p>Exploration de l’intelligence artificielle appliquée aux échecs...</p>
+    <section id="competences" class="page-section reveal">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">Ce que je maîtrise</p>
+          <h2>Compétences</h2>
+        </header>
+        <div class="skills-grid">
+          <article class="skill-block">
+            <h3>Systèmes</h3>
+            <ul>
+              <li>Installation, configuration et durcissement des OS (Windows, Linux).</li>
+              <li>Gestion des comptes, droits et stratégies de groupe.</li>
+              <li>Automatisation de tâches via scripts Bash et PowerShell.</li>
+              <li>Surveillance, diagnostic et documentation proactive.</li>
+            </ul>
+          </article>
+          <article class="skill-block">
+            <h3>Réseaux</h3>
+            <ul>
+              <li>Conception LAN/VLAN et adressage IP.</li>
+              <li>Configuration de routeurs, commutateurs et pare-feu (Cisco, PfSense).</li>
+              <li>Analyse de trafic, Wireshark, sécurité périmétrique.</li>
+              <li>Création de tunnels VPN site-à-site.</li>
+            </ul>
+          </article>
+          <article class="skill-block">
+            <h3>Cybersécurité</h3>
+            <ul>
+              <li>Gestion des accès, MFA, politiques de mots de passe.</li>
+              <li>Détection d’incidents et analyse de logs (Wazuh, Graylog).</li>
+              <li>Plan de reprise d’activité et sensibilisation utilisateurs.</li>
+              <li>Veille constante sur les vulnérabilités et patchs.</li>
+            </ul>
+          </article>
+          <article class="skill-block">
+            <h3>Gestion de projet</h3>
+            <ul>
+              <li>Planification, suivi des tâches et reporting.</li>
+              <li>Méthodologies agiles (Scrum, Kanban) et outils (Teams, Trello).</li>
+              <li>Rédaction de livrables et supports de formation.</li>
+              <li>Communication transversale et animation d’ateliers.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="skills-stats" aria-label="Niveau de confiance">
+          <div class="stat" data-target="90">
+            <span class="stat-value">0%</span>
+            <span class="stat-label">Administration systèmes</span>
+          </div>
+          <div class="stat" data-target="85">
+            <span class="stat-value">0%</span>
+            <span class="stat-label">Ingénierie réseau</span>
+          </div>
+          <div class="stat" data-target="80">
+            <span class="stat-value">0%</span>
+            <span class="stat-label">Cybersécurité</span>
+          </div>
+          <div class="stat" data-target="75">
+            <span class="stat-value">0%</span>
+            <span class="stat-label">Gestion de projet</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="interets" class="page-section">
-      <h1>Centres d’intérêt</h1>
-      <ul>
-        <li>Échecs</li>
-        <li>Jeux vidéos</li>
-        <li>Musique (concerts)</li>
-      </ul>
+    <section id="projets" class="page-section reveal">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">Mises en pratique</p>
+          <h2>Projets significatifs</h2>
+        </header>
+        <div class="project-grid">
+          <article class="project-card">
+            <h3>Plateforme de supervision réseau</h3>
+            <p>Mise en place d’une stack open-source (Zabbix + Grafana) pour surveiller un parc de serveurs virtuels et générer des alertes proactives.</p>
+            <ul>
+              <li>Création de dashboards dynamiques pour la direction.</li>
+              <li>Automatisation des notifications via webhook Teams.</li>
+            </ul>
+            <span class="tag">Linux · Docker · Grafana</span>
+          </article>
+          <article class="project-card">
+            <h3>Infra sécurisée pour laboratoire</h3>
+            <p>Conception d’un réseau isolé pour des tests de sécurité, incluant pare-feu PfSense, VLAN et bastion d’administration.</p>
+            <ul>
+              <li>Documentation complète et procédures d’exploitation.</li>
+              <li>Déploiement de scripts d’initialisation et d’audit.</li>
+            </ul>
+            <span class="tag">PfSense · VLAN · PowerShell</span>
+          </article>
+          <article class="project-card">
+            <h3>Chatbot d’assistance interne</h3>
+            <p>Prototype d’un chatbot IA pour répondre aux questions récurrentes des utilisateurs à partir de la base documentaire du service support.</p>
+            <ul>
+              <li>Intégration d’une API de langage naturel.</li>
+              <li>Réduction du volume de tickets simples de 30%.</li>
+            </ul>
+            <span class="tag">Python · API IA · Teams</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications" class="page-section reveal">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">Reconnaissances</p>
+          <h2>Certifications</h2>
+        </header>
+        <div class="certification-grid">
+          <article class="cert-card">
+            <h3>Linux Unhatched</h3>
+            <p>Cisco Networking Academy — fondamentaux Linux, commandes essentielles, gestion utilisateurs et permissions.</p>
+          </article>
+          <article class="cert-card">
+            <h3>Introduction to Cybersecurity</h3>
+            <p>Cisco Networking Academy — culture cyber, analyse des menaces, sécurisation du poste utilisateur et gouvernance.</p>
+          </article>
+          <article class="cert-card">
+            <h3>IT Essentials</h3>
+            <p>Cisco Networking Academy — architecture matérielle, maintenance, dépannage et bonnes pratiques de support.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="veille" class="page-section reveal">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">Veille technologique</p>
+          <h2>L’IA au service de la cybersécurité</h2>
+        </header>
+        <article class="veille-article">
+          <p>Je mène une veille régulière sur l’intégration de l’intelligence artificielle dans les dispositifs de défense. Je suis notamment les initiatives open source (Wazuh, TheHive) et les apports de l’apprentissage automatique pour la détection d’anomalies réseau.</p>
+          <p>En 2024, j’ai réalisé une synthèse sur les outils de tri automatisé des journaux (log parsing) et sur les solutions XDR qui exploitent l’IA pour prioriser les alertes. Cette veille me permet de proposer des améliorations concrètes pour renforcer la supervision sécurité.</p>
+          <ul>
+            <li>Sources suivies : CERT-FR, ANSSI, blogs CrowdStrike & Sekoia, podcasts NoLimitSecu.</li>
+            <li>Outils : Feedly, Mattermost, alertes RSS personnalisées.</li>
+            <li>Objectif 2025 : expérimenter un modèle IA léger pour la corrélation d’événements.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="interets" class="page-section reveal">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">Au-delà de l’écran</p>
+          <h2>Centres d’intérêt</h2>
+        </header>
+        <div class="interest-grid">
+          <div class="interest-card">
+            <h3>Échecs</h3>
+            <p>Membre actif d’un club local, participation à des tournois rapides et animation d’ateliers découverte.</p>
+          </div>
+          <div class="interest-card">
+            <h3>Jeux vidéo</h3>
+            <p>Pratique des jeux de stratégie et d’équipe, moteur pour développer coordination et communication.</p>
+          </div>
+          <div class="interest-card">
+            <h3>Musique</h3>
+            <p>Passion pour les concerts et la production musicale électronique.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="page-section reveal">
+      <div class="container contact-section">
+        <header class="section-header">
+          <p class="eyebrow">Restons en contact</p>
+          <h2>Contact</h2>
+        </header>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Discutons de vos projets</h3>
+            <p>Disponible pour des opportunités d’alternance ou de stage autour de l’administration systèmes, réseaux ou cybersécurité.</p>
+            <ul class="contact-infos">
+              <li><span aria-hidden="true">📧</span> <button class="link-btn" data-copy="thomas.borras-dupuy@example.com">thomas.borras-dupuy@example.com</button></li>
+              <li><span aria-hidden="true">📞</span> +33 6 12 34 56 78</li>
+              <li><span aria-hidden="true">📍</span> Paris & Île-de-France</li>
+            </ul>
+            <p class="copy-feedback" role="status" aria-live="polite"></p>
+          </div>
+          <form class="contact-form" aria-label="Formulaire de contact">
+            <label>
+              Nom
+              <input type="text" name="nom" placeholder="Votre nom" required>
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" placeholder="Votre email" required>
+            </label>
+            <label>
+              Message
+              <textarea name="message" rows="5" placeholder="Votre message"></textarea>
+            </label>
+            <button type="submit" class="btn primary">Envoyer</button>
+            <p class="form-note">*Ce formulaire est un prototype illustrant la démarche de contact.</p>
+          </form>
+        </div>
+      </div>
     </section>
   </main>
 
-  <canvas id="cursor-tracking"></canvas>
-  <script src="script.js"></script>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Thomas Borras-Dupuy — Tous droits réservés.</p>
+      <a href="#top" class="back-to-top">Retour en haut</a>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
