@@ -594,7 +594,6 @@ body::before {
 .experience-card:focus-within,
 .skill-block:hover,
 .skill-block:focus-within,
-.project-card.active,
 .project-card:hover,
 .project-card:focus-within,
 .cert-card:hover,
@@ -642,59 +641,6 @@ body::before {
   display: grid;
   gap: 0.8rem;
   transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
-}
-
-.project-card {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  --gradient-size: clamp(220px, 40vw, 320px);
-  z-index: 0;
-}
-
-.project-card::before {
-  content: "";
-  position: absolute;
-  top: var(--y, 50%);
-  left: var(--x, 50%);
-  width: var(--gradient-size);
-  height: var(--gradient-size);
-  transform: translate(-50%, -50%);
-  background: radial-gradient(
-    circle at center,
-    rgba(0, 245, 212, 0.55),
-    rgba(0, 245, 212, 0.08) 55%,
-    rgba(0, 245, 212, 0) 75%
-  );
-  filter: blur(35px);
-  opacity: 0;
-  transition: opacity 0.45s ease;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.project-card::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  border: 1px solid rgba(0, 245, 212, 0.25);
-  opacity: 0;
-  transition: opacity 0.45s ease;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.project-card.active::before,
-.project-card:hover::before,
-.project-card:focus-within::before {
-  opacity: 1;
-}
-
-.project-card.active::after,
-.project-card:hover::after,
-.project-card:focus-within::after {
-  opacity: 1;
 }
 
 .project-card h3,
@@ -854,6 +800,41 @@ body::before {
   font-weight: 600;
 }
 
+.click-spark {
+  position: fixed;
+  left: calc(var(--spark-x) - var(--spark-size) * 0.5);
+  top: calc(var(--spark-y) - var(--spark-size) * 0.5);
+  width: var(--spark-size);
+  height: var(--spark-size);
+  border-radius: 999px;
+  pointer-events: none;
+  background: radial-gradient(circle at center, var(--spark-color), rgba(124, 77, 255, 0.15) 70%, transparent 100%);
+  opacity: 0;
+  transform: translate(0, 0) scale(var(--spark-scale));
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 12px rgba(124, 77, 255, 0.45));
+}
+
+.click-spark.active {
+  animation: click-spark-travel var(--spark-duration) ease-out forwards;
+}
+
+@keyframes click-spark-travel {
+  0% {
+    opacity: 0.9;
+    transform: translate(0, 0) scale(var(--spark-scale));
+  }
+
+  70% {
+    opacity: 0.55;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--spark-tx), var(--spark-ty)) scale(0);
+  }
+}
+
 @keyframes card-fade-up {
   from {
     opacity: 0;
@@ -920,6 +901,10 @@ body::before {
   .reveal.visible .veille-article,
   .reveal.visible .timeline-item {
     animation: none !important;
+  }
+
+  .click-spark {
+    display: none !important;
   }
 }
 

@@ -5,11 +5,12 @@ const nav = document.querySelector('.site-nav');
 const themeToggle = document.querySelector('.theme-toggle');
 const stats = document.querySelectorAll('.stat');
 const sections = document.querySelectorAll('.reveal');
-const projectCards = document.querySelectorAll('.project-card');
 const yearSpan = document.getElementById('year');
 const copyButtons = document.querySelectorAll('[data-copy]');
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
+const decryptElements = document.querySelectorAll('[data-decrypt]');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // --- Responsive navigation ---
 navToggle?.addEventListener('click', () => {
@@ -72,50 +73,6 @@ const revealObserver = new IntersectionObserver(
 
 sections.forEach((section) => revealObserver.observe(section));
 
-// --- Gradual blur hover for projects ---
-projectCards.forEach((card) => {
-  const updatePosition = (event) => {
-    const rect = card.getBoundingClientRect();
-    const relativeX = event?.clientX != null ? event.clientX - rect.left : rect.width / 2;
-    const relativeY = event?.clientY != null ? event.clientY - rect.top : rect.height / 2;
-    card.style.setProperty('--x', `${relativeX}px`);
-    card.style.setProperty('--y', `${relativeY}px`);
-  };
-
-  const activate = (event) => {
-    updatePosition(event);
-    card.classList.add('active');
-  };
-
-  const resetActiveState = () => {
-    card.classList.remove('active');
-  };
-
-  const clearPosition = () => {
-    card.style.removeProperty('--x');
-    card.style.removeProperty('--y');
-  };
-
-  card.addEventListener('pointerenter', activate);
-  card.addEventListener('pointerdown', activate);
-  card.addEventListener('pointermove', activate);
-  card.addEventListener('focus', activate);
-  card.addEventListener('pointerup', resetActiveState);
-  card.addEventListener('pointercancel', () => {
-    resetActiveState();
-    clearPosition();
-  });
-  card.addEventListener('blur', () => {
-    resetActiveState();
-    clearPosition();
-  });
-
-  card.addEventListener('pointerleave', () => {
-    resetActiveState();
-    clearPosition();
-  });
-});
-
 // --- Animated statistics ---
 const statObserver = new IntersectionObserver(
   (entries, observer) => {
@@ -147,6 +104,74 @@ const statObserver = new IntersectionObserver(
 );
 
 stats.forEach((stat) => statObserver.observe(stat));
+
+// --- Decrypted text effect ---
+const scrambleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*+-=?';
+
+const runDecryptEffect = (element) => {
+  const originalText = element.dataset.decrypt || element.textContent || '';
+  const originalHtml = element.dataset.originalHtml || element.innerHTML;
+  const totalFrames = Math.max(originalText.length * 4, 48);
+  let frame = 0;
+
+  element.dataset.animating = 'true';
+
+  const animate = () => {
+    const progress = frame / totalFrames;
+    const revealCount = Math.floor(progress * originalText.length);
+    const nextValue = originalText
+      .split('')
+      .map((char, index) => {
+        if (char === ' ') {
+          return ' ';
+        }
+        if (index < revealCount) {
+          return char;
+        }
+        return scrambleCharacters.charAt(
+          Math.floor(Math.random() * scrambleCharacters.length)
+        );
+      })
+      .join('');
+
+    element.textContent = nextValue;
+    frame += 1;
+
+    if (frame <= totalFrames) {
+      requestAnimationFrame(animate);
+    } else {
+      element.innerHTML = originalHtml;
+      element.dataset.animating = 'false';
+    }
+  };
+
+  requestAnimationFrame(animate);
+};
+
+decryptElements.forEach((element) => {
+  const originalHtml = element.innerHTML;
+  const fallbackText = element.dataset.decrypt || element.textContent || '';
+  if (!fallbackText.trim()) return;
+  element.dataset.originalHtml = originalHtml;
+  element.dataset.decrypt = fallbackText;
+
+  if (prefersReducedMotion.matches) {
+    element.innerHTML = originalHtml;
+    return;
+  }
+
+  runDecryptEffect(element);
+
+  element.addEventListener('pointerenter', () => {
+    if (element.dataset.animating === 'true') return;
+    runDecryptEffect(element);
+  });
+
+  element.addEventListener('focus', () => {
+    if (element.dataset.animating === 'true') return;
+    runDecryptEffect(element);
+  });
+});
 
 // --- Theme toggle ---
 const THEME_KEY = 'tb-portfolio-theme';
@@ -186,6 +211,55 @@ copyButtons.forEach((button) => {
       }
     }
   });
+});
+
+// --- Click spark animation ---
+const SPARK_COLOR = '#7c4dff';
+const SPARK_SIZE = 26;
+const SPARK_RADIUS = 115;
+const SPARK_COUNT = 10;
+const SPARK_DURATION = 500;
+const SPARK_EXTRA_SCALE = 1;
+
+const spawnClickSpark = (x, y) => {
+  if (prefersReducedMotion.matches) return;
+
+  for (let index = 0; index < SPARK_COUNT; index += 1) {
+    const spark = document.createElement('span');
+    const angle = (Math.PI * 2 * index) / SPARK_COUNT + Math.random() * 0.3;
+    const distance = SPARK_RADIUS * (0.9 + Math.random() * 0.2);
+    const translateX = Math.cos(angle) * distance;
+    const translateY = Math.sin(angle) * distance;
+
+    spark.className = 'click-spark';
+    spark.style.setProperty('--spark-color', SPARK_COLOR);
+    spark.style.setProperty('--spark-size', `${SPARK_SIZE}px`);
+    spark.style.setProperty('--spark-duration', `${SPARK_DURATION}ms`);
+    spark.style.setProperty('--spark-x', `${x}px`);
+    spark.style.setProperty('--spark-y', `${y}px`);
+    spark.style.setProperty('--spark-tx', `${translateX}px`);
+    spark.style.setProperty('--spark-ty', `${translateY}px`);
+    spark.style.setProperty('--spark-scale', SPARK_EXTRA_SCALE);
+
+    document.body.appendChild(spark);
+
+    requestAnimationFrame(() => {
+      spark.classList.add('active');
+    });
+
+    setTimeout(() => {
+      spark.remove();
+    }, SPARK_DURATION + 60);
+  }
+};
+
+window.addEventListener('pointerdown', (event) => {
+  if (prefersReducedMotion.matches) return;
+  if (!event.isPrimary) return;
+  if (event.pointerType === 'mouse' && event.button !== 0) return;
+  if (event.clientX === 0 && event.clientY === 0) return;
+
+  spawnClickSpark(event.clientX, event.clientY);
 });
 
 // --- Prevent default form submission ---
