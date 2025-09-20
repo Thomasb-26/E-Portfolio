@@ -5,6 +5,7 @@ const nav = document.querySelector('.site-nav');
 const themeToggle = document.querySelector('.theme-toggle');
 const stats = document.querySelectorAll('.stat');
 const sections = document.querySelectorAll('.reveal');
+const projectCards = document.querySelectorAll('.project-card');
 const yearSpan = document.getElementById('year');
 const copyButtons = document.querySelectorAll('[data-copy]');
 const canvas = document.getElementById('bg-canvas');
@@ -70,6 +71,50 @@ const revealObserver = new IntersectionObserver(
 );
 
 sections.forEach((section) => revealObserver.observe(section));
+
+// --- Gradual blur hover for projects ---
+projectCards.forEach((card) => {
+  const updatePosition = (event) => {
+    const rect = card.getBoundingClientRect();
+    const relativeX = event?.clientX != null ? event.clientX - rect.left : rect.width / 2;
+    const relativeY = event?.clientY != null ? event.clientY - rect.top : rect.height / 2;
+    card.style.setProperty('--x', `${relativeX}px`);
+    card.style.setProperty('--y', `${relativeY}px`);
+  };
+
+  const activate = (event) => {
+    updatePosition(event);
+    card.classList.add('active');
+  };
+
+  const resetActiveState = () => {
+    card.classList.remove('active');
+  };
+
+  const clearPosition = () => {
+    card.style.removeProperty('--x');
+    card.style.removeProperty('--y');
+  };
+
+  card.addEventListener('pointerenter', activate);
+  card.addEventListener('pointerdown', activate);
+  card.addEventListener('pointermove', activate);
+  card.addEventListener('focus', activate);
+  card.addEventListener('pointerup', resetActiveState);
+  card.addEventListener('pointercancel', () => {
+    resetActiveState();
+    clearPosition();
+  });
+  card.addEventListener('blur', () => {
+    resetActiveState();
+    clearPosition();
+  });
+
+  card.addEventListener('pointerleave', () => {
+    resetActiveState();
+    clearPosition();
+  });
+});
 
 // --- Animated statistics ---
 const statObserver = new IntersectionObserver(
