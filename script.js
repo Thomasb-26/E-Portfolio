@@ -3,6 +3,7 @@ const header = document.querySelector('.site-header');
 const navToggle = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.site-nav');
 const themeToggle = document.querySelector('.theme-toggle');
+const themeToggleLabel = themeToggle?.querySelector('.theme-toggle__label');
 const stats = document.querySelectorAll('.stat');
 const sections = document.querySelectorAll('.reveal');
 const yearSpan = document.getElementById('year');
@@ -108,13 +109,48 @@ stats.forEach((stat) => statObserver.observe(stat));
 // --- Decrypted text effect ---
 const scrambleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*+-=?';
 
+const lockDecryptHeight = (element) => {
+  const rect = element.getBoundingClientRect();
+  element.style.setProperty('--decrypt-min-height', `${rect.height}px`);
+  element.classList.add('decrypt-locked');
+};
+
+const ensureDecryptStructure = (element, fallbackText) => {
+  let contentWrapper = element.querySelector('.decrypt-content');
+  if (!contentWrapper) {
+    contentWrapper = document.createElement('span');
+    contentWrapper.className = 'decrypt-content';
+    const fragment = document.createDocumentFragment();
+    while (element.firstChild) {
+      fragment.appendChild(element.firstChild);
+    }
+    contentWrapper.appendChild(fragment);
+    element.appendChild(contentWrapper);
+  }
+
+  let overlay = element.querySelector('.decrypt-overlay');
+  if (!overlay) {
+    overlay = document.createElement('span');
+    overlay.className = 'decrypt-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    element.appendChild(overlay);
+  }
+
+  overlay.textContent = fallbackText;
+
+  return { contentWrapper, overlay };
+};
+
 const runDecryptEffect = (element) => {
-  const originalText = element.dataset.decrypt || element.textContent || '';
-  const originalHtml = element.dataset.originalHtml || element.innerHTML;
-  const totalFrames = Math.max(originalText.length * 4, 48);
+  const overlay = element.querySelector('.decrypt-overlay');
+  const originalText = element.dataset.decrypt || overlay?.textContent || '';
+  if (!overlay || !originalText) return;
+
+  const totalFrames = Math.max(Math.floor(originalText.length * 2.5), 30);
   let frame = 0;
 
   element.dataset.animating = 'true';
+  element.classList.add('decrypt-animating');
 
   const animate = () => {
     const progress = frame / totalFrames;
@@ -134,14 +170,15 @@ const runDecryptEffect = (element) => {
       })
       .join('');
 
-    element.textContent = nextValue;
+    overlay.textContent = nextValue;
     frame += 1;
 
     if (frame <= totalFrames) {
       requestAnimationFrame(animate);
     } else {
-      element.innerHTML = originalHtml;
+      overlay.textContent = originalText;
       element.dataset.animating = 'false';
+      element.classList.remove('decrypt-animating');
     }
   };
 
@@ -149,14 +186,13 @@ const runDecryptEffect = (element) => {
 };
 
 decryptElements.forEach((element) => {
-  const originalHtml = element.innerHTML;
   const fallbackText = element.dataset.decrypt || element.textContent || '';
   if (!fallbackText.trim()) return;
-  element.dataset.originalHtml = originalHtml;
   element.dataset.decrypt = fallbackText;
+  ensureDecryptStructure(element, fallbackText);
+  lockDecryptHeight(element);
 
   if (prefersReducedMotion.matches) {
-    element.innerHTML = originalHtml;
     return;
   }
 
@@ -175,15 +211,34 @@ decryptElements.forEach((element) => {
 
 // --- Theme toggle ---
 const THEME_KEY = 'tb-portfolio-theme';
+const DEFAULT_THEME = 'dark';
 const savedTheme = localStorage.getItem(THEME_KEY);
-if (savedTheme) {
-  root.setAttribute('data-theme', savedTheme);
-}
+const initialTheme = savedTheme || root.getAttribute('data-theme') || DEFAULT_THEME;
+
+const updateThemeToggleLabel = (theme) => {
+  const nextTheme = theme === 'light' ? 'dark' : 'light';
+  const labelText = nextTheme === 'dark' ? 'Mode nuit' : 'Mode clair';
+  if (themeToggleLabel) {
+    themeToggleLabel.textContent = labelText;
+  }
+  if (themeToggle) {
+    themeToggle.setAttribute('aria-label', `Activer le ${labelText.toLowerCase()}`);
+    themeToggle.setAttribute('title', `Activer le ${labelText.toLowerCase()}`);
+  }
+};
+
+const applyTheme = (theme) => {
+  root.setAttribute('data-theme', theme);
+  localStorage.setItem(THEME_KEY, theme);
+  updateThemeToggleLabel(theme);
+};
+
+applyTheme(initialTheme);
 
 themeToggle?.addEventListener('click', () => {
-  const currentTheme = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-  root.setAttribute('data-theme', currentTheme);
-  localStorage.setItem(THEME_KEY, currentTheme);
+  const currentTheme = root.getAttribute('data-theme') || DEFAULT_THEME;
+  const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+  applyTheme(nextTheme);
 });
 
 // --- Footer year ---
@@ -275,7 +330,12 @@ contactForm?.addEventListener('submit', (event) => {
 
 // --- Animated particle background ---
 const particles = [];
-const particleCount = 60;
+const particleCount = 70;
+const particlePalette = [
+  'rgba(127, 90, 240, 0.85)',
+  'rgba(14, 165, 233, 0.85)',
+  'rgba(226, 232, 240, 0.75)'
+];
 let animationFrameId;
 
 const resizeCanvas = () => {
@@ -289,30 +349,44 @@ const createParticles = () => {
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 2 + 0.5,
-      speedX: (Math.random() - 0.5) * 0.6,
-      speedY: (Math.random() - 0.5) * 0.6,
+      size: Math.random() * 2.4 + 0.4,
+      speedX: (Math.random() - 0.5) * 0.45,
+      speedY: (Math.random() - 0.5) * 0.45,
+      color: particlePalette[Math.floor(Math.random() * particlePalette.length)],
+      pulse: Math.random() * 0.6 + 0.4,
     });
   }
 };
 
 const drawParticles = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'rgba(0, 245, 212, 0.6)';
   particles.forEach((particle) => {
+    ctx.fillStyle = particle.color;
+    ctx.shadowColor = particle.color;
+    ctx.shadowBlur = 12;
     ctx.beginPath();
-    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+    ctx.arc(particle.x, particle.y, particle.size * particle.pulse, 0, Math.PI * 2);
     ctx.fill();
   });
 
-  ctx.strokeStyle = 'rgba(0, 245, 212, 0.15)';
+  ctx.shadowBlur = 0;
+
   for (let i = 0; i < particles.length; i += 1) {
     for (let j = i + 1; j < particles.length; j += 1) {
       const dx = particles[i].x - particles[j].x;
       const dy = particles[i].y - particles[j].y;
       const distance = Math.sqrt(dx ** 2 + dy ** 2);
       if (distance < 120) {
-        ctx.globalAlpha = 1 - distance / 120;
+        const gradient = ctx.createLinearGradient(
+          particles[i].x,
+          particles[i].y,
+          particles[j].x,
+          particles[j].y
+        );
+        gradient.addColorStop(0, particles[i].color);
+        gradient.addColorStop(1, particles[j].color);
+        ctx.globalAlpha = 1 - distance / 140;
+        ctx.strokeStyle = gradient;
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
@@ -320,12 +394,14 @@ const drawParticles = () => {
       }
     }
   }
+  ctx.globalAlpha = 1;
 };
 
 const updateParticles = () => {
   particles.forEach((particle) => {
     particle.x += particle.speedX;
     particle.y += particle.speedY;
+    particle.pulse = Math.min(1.2, Math.max(0.4, particle.pulse + (Math.random() - 0.5) * 0.02));
 
     if (particle.x < 0 || particle.x > canvas.width) {
       particle.speedX *= -1;
