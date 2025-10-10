@@ -8,8 +8,7 @@ const stats = document.querySelectorAll('.stat');
 const sections = document.querySelectorAll('.reveal');
 const yearSpan = document.getElementById('year');
 const copyButtons = document.querySelectorAll('[data-copy]');
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
+const backgroundRoot = document.querySelector('.site-background');
 const decryptElements = document.querySelectorAll('[data-decrypt]');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -142,11 +141,12 @@ const ensureDecryptStructure = (element, fallbackText) => {
 };
 
 const runDecryptEffect = (element) => {
+  if (element.dataset.played === 'true') return;
   const overlay = element.querySelector('.decrypt-overlay');
   const originalText = element.dataset.decrypt || overlay?.textContent || '';
   if (!overlay || !originalText) return;
 
-  const totalFrames = Math.max(Math.floor(originalText.length * 2.5), 30);
+  const totalFrames = Math.max(Math.floor(originalText.length * 1.3), 20);
   let frame = 0;
 
   element.dataset.animating = 'true';
@@ -179,6 +179,7 @@ const runDecryptEffect = (element) => {
       overlay.textContent = originalText;
       element.dataset.animating = 'false';
       element.classList.remove('decrypt-animating');
+      element.dataset.played = 'true';
     }
   };
 
@@ -197,16 +198,6 @@ decryptElements.forEach((element) => {
   }
 
   runDecryptEffect(element);
-
-  element.addEventListener('pointerenter', () => {
-    if (element.dataset.animating === 'true') return;
-    runDecryptEffect(element);
-  });
-
-  element.addEventListener('focus', () => {
-    if (element.dataset.animating === 'true') return;
-    runDecryptEffect(element);
-  });
 });
 
 // --- Theme toggle ---
@@ -328,108 +319,52 @@ contactForm?.addEventListener('submit', (event) => {
   contactForm.reset();
 });
 
-// --- Animated particle background ---
-const particles = [];
-const particleCount = 70;
-const particlePalette = [
-  'rgba(127, 90, 240, 0.85)',
-  'rgba(14, 165, 233, 0.85)',
-  'rgba(226, 232, 240, 0.75)'
-];
-let animationFrameId;
+// --- Animated portfolio backdrop ---
+const ORB_COUNT = 14;
 
-const resizeCanvas = () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+const clearOrbs = () => {
+  if (!backgroundRoot) return;
+  backgroundRoot.querySelectorAll('.bg-orb').forEach((orb) => orb.remove());
 };
 
-const createParticles = () => {
-  particles.length = 0;
-  for (let i = 0; i < particleCount; i += 1) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      size: Math.random() * 2.4 + 0.4,
-      speedX: (Math.random() - 0.5) * 0.45,
-      speedY: (Math.random() - 0.5) * 0.45,
-      color: particlePalette[Math.floor(Math.random() * particlePalette.length)],
-      pulse: Math.random() * 0.6 + 0.4,
-    });
+const createOrb = () => {
+  if (!backgroundRoot) return null;
+  const orb = document.createElement('span');
+  const size = 140 + Math.random() * 260;
+  const duration = 18 + Math.random() * 22;
+  const driftX = (Math.random() - 0.5) * 80;
+  const driftY = (Math.random() - 0.5) * 70;
+  const hueBase = 215 + Math.random() * 110;
+
+  orb.className = 'bg-orb';
+  orb.style.setProperty('--orb-size', `${size}px`);
+  orb.style.setProperty('--orb-duration', `${duration}s`);
+  orb.style.setProperty('--orb-delay', `${Math.random() * -duration}s`);
+  orb.style.setProperty('--orb-x', `${Math.random() * 100}%`);
+  orb.style.setProperty('--orb-y', `${Math.random() * 100}%`);
+  orb.style.setProperty('--orb-drift-x', `${driftX}px`);
+  orb.style.setProperty('--orb-drift-y', `${driftY}px`);
+  orb.style.setProperty('--orb-hue', `${hueBase}`);
+  orb.style.setProperty('--orb-opacity', `${0.28 + Math.random() * 0.3}`);
+
+  backgroundRoot.appendChild(orb);
+  return orb;
+};
+
+const buildBackgroundOrbs = () => {
+  if (!backgroundRoot) return;
+  clearOrbs();
+  if (prefersReducedMotion.matches) return;
+  for (let index = 0; index < ORB_COUNT; index += 1) {
+    createOrb();
   }
 };
 
-const drawParticles = () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach((particle) => {
-    ctx.fillStyle = particle.color;
-    ctx.shadowColor = particle.color;
-    ctx.shadowBlur = 12;
-    ctx.beginPath();
-    ctx.arc(particle.x, particle.y, particle.size * particle.pulse, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  ctx.shadowBlur = 0;
-
-  for (let i = 0; i < particles.length; i += 1) {
-    for (let j = i + 1; j < particles.length; j += 1) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const distance = Math.sqrt(dx ** 2 + dy ** 2);
-      if (distance < 120) {
-        const gradient = ctx.createLinearGradient(
-          particles[i].x,
-          particles[i].y,
-          particles[j].x,
-          particles[j].y
-        );
-        gradient.addColorStop(0, particles[i].color);
-        gradient.addColorStop(1, particles[j].color);
-        ctx.globalAlpha = 1 - distance / 140;
-        ctx.strokeStyle = gradient;
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.stroke();
-      }
-    }
+if (backgroundRoot) {
+  buildBackgroundOrbs();
+  if (typeof prefersReducedMotion.addEventListener === 'function') {
+    prefersReducedMotion.addEventListener('change', buildBackgroundOrbs);
+  } else if (typeof prefersReducedMotion.addListener === 'function') {
+    prefersReducedMotion.addListener(buildBackgroundOrbs);
   }
-  ctx.globalAlpha = 1;
-};
-
-const updateParticles = () => {
-  particles.forEach((particle) => {
-    particle.x += particle.speedX;
-    particle.y += particle.speedY;
-    particle.pulse = Math.min(1.2, Math.max(0.4, particle.pulse + (Math.random() - 0.5) * 0.02));
-
-    if (particle.x < 0 || particle.x > canvas.width) {
-      particle.speedX *= -1;
-    }
-    if (particle.y < 0 || particle.y > canvas.height) {
-      particle.speedY *= -1;
-    }
-  });
-};
-
-const animate = () => {
-  drawParticles();
-  updateParticles();
-  animationFrameId = requestAnimationFrame(animate);
-};
-
-const initCanvas = () => {
-  resizeCanvas();
-  createParticles();
-  cancelAnimationFrame(animationFrameId);
-  animate();
-};
-
-window.addEventListener('resize', () => {
-  resizeCanvas();
-  createParticles();
-});
-
-if (canvas && ctx) {
-  initCanvas();
 }
