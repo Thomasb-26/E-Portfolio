@@ -4,12 +4,12 @@ const navToggle = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.site-nav');
 const themeToggle = document.querySelector('.theme-toggle');
 const themeToggleLabel = themeToggle?.querySelector('.theme-toggle__label');
-const stats = document.querySelectorAll('.stat');
 const sections = document.querySelectorAll('.reveal');
 const yearSpan = document.getElementById('year');
 const copyButtons = document.querySelectorAll('[data-copy]');
 const backgroundRoot = document.querySelector('.site-background');
 const decryptElements = document.querySelectorAll('[data-decrypt]');
+const backToTopButton = document.querySelector('.back-to-top');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // --- Responsive navigation ---
@@ -72,38 +72,6 @@ const revealObserver = new IntersectionObserver(
 );
 
 sections.forEach((section) => revealObserver.observe(section));
-
-// --- Animated statistics ---
-const statObserver = new IntersectionObserver(
-  (entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      const stat = entry.target;
-      const valueEl = stat.querySelector('.stat-value');
-      const target = Number(stat.dataset.target || 0);
-      let current = 0;
-      const step = Math.max(1, Math.round(target / 50));
-
-      const updateValue = () => {
-        current += step;
-        if (current >= target) {
-          current = target;
-          stat.classList.add('active');
-          valueEl.textContent = `${target}%`;
-          return;
-        }
-        valueEl.textContent = `${current}%`;
-        requestAnimationFrame(updateValue);
-      };
-
-      requestAnimationFrame(updateValue);
-      observer.unobserve(stat);
-    });
-  },
-  { threshold: 0.5 }
-);
-
-stats.forEach((stat) => statObserver.observe(stat));
 
 // --- Decrypted text effect ---
 const scrambleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*+-=?';
@@ -236,6 +204,15 @@ themeToggle?.addEventListener('click', () => {
 if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
+
+// --- Back to top button ---
+backToTopButton?.addEventListener('click', (event) => {
+  event.preventDefault();
+  window.scrollTo({
+    top: 0,
+    behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+  });
+});
 
 // --- Copy to clipboard ---
 const feedback = document.querySelector('.copy-feedback');
