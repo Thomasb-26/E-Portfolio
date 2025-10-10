@@ -758,9 +758,10 @@ body {
 
 .tool-list {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: stretch;
 }
 
 .tool-list li {
@@ -770,7 +771,7 @@ body {
   border: 1px solid var(--pill-border);
   font-weight: 500;
   color: var(--text);
-  text-align: center;
+  text-align: left;
 }
 
 .certification-grid,
