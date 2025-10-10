@@ -260,7 +260,7 @@ copyButtons.forEach((button) => {
 });
 
 // --- Click spark animation ---
-const SPARK_COLOR = '#7c4dff';
+const SPARK_COLOR = '#ff2d20';
 const SPARK_SIZE = 26;
 const SPARK_RADIUS = 115;
 const SPARK_COUNT = 10;
@@ -320,7 +320,7 @@ contactForm?.addEventListener('submit', (event) => {
 });
 
 // --- Animated portfolio backdrop ---
-const ORB_COUNT = 16;
+const ORB_COUNT = 0;
 
 const clearOrbs = () => {
   if (!backgroundRoot) return;
