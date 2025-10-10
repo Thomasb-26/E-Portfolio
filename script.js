@@ -208,7 +208,7 @@ const initialTheme = savedTheme || root.getAttribute('data-theme') || DEFAULT_TH
 
 const updateThemeToggleLabel = (theme) => {
   const nextTheme = theme === 'light' ? 'dark' : 'light';
-  const labelText = nextTheme === 'dark' ? 'Mode nuit' : 'Mode clair';
+  const labelText = nextTheme === 'dark' ? 'Mode sombre' : 'Mode clair';
   if (themeToggleLabel) {
     themeToggleLabel.textContent = labelText;
   }
@@ -320,7 +320,7 @@ contactForm?.addEventListener('submit', (event) => {
 });
 
 // --- Animated portfolio backdrop ---
-const ORB_COUNT = 14;
+const ORB_COUNT = 16;
 
 const clearOrbs = () => {
   if (!backgroundRoot) return;
@@ -330,11 +330,16 @@ const clearOrbs = () => {
 const createOrb = () => {
   if (!backgroundRoot) return null;
   const orb = document.createElement('span');
-  const size = 140 + Math.random() * 260;
-  const duration = 18 + Math.random() * 22;
-  const driftX = (Math.random() - 0.5) * 80;
-  const driftY = (Math.random() - 0.5) * 70;
-  const hueBase = 215 + Math.random() * 110;
+  const size = 160 + Math.random() * 240;
+  const duration = 16 + Math.random() * 26;
+  const driftX = (Math.random() - 0.5) * 110;
+  const driftY = (Math.random() - 0.5) * 60;
+  const isYellowHighlight = Math.random() > 0.76;
+  const hueBase = isYellowHighlight ? 45 + Math.random() * 10 : 6 + Math.random() * 12;
+  const opacity = isYellowHighlight ? 0.18 + Math.random() * 0.2 : 0.3 + Math.random() * 0.28;
+  const rotation = (Math.random() - 0.5) * 36;
+  const scale = 1.25 + Math.random() * 0.7;
+  const thickness = isYellowHighlight ? 0.24 + Math.random() * 0.08 : 0.3 + Math.random() * 0.12;
 
   orb.className = 'bg-orb';
   orb.style.setProperty('--orb-size', `${size}px`);
@@ -345,7 +350,10 @@ const createOrb = () => {
   orb.style.setProperty('--orb-drift-x', `${driftX}px`);
   orb.style.setProperty('--orb-drift-y', `${driftY}px`);
   orb.style.setProperty('--orb-hue', `${hueBase}`);
-  orb.style.setProperty('--orb-opacity', `${0.28 + Math.random() * 0.3}`);
+  orb.style.setProperty('--orb-opacity', `${opacity}`);
+  orb.style.setProperty('--orb-rotation', `${rotation}deg`);
+  orb.style.setProperty('--orb-scale', `${scale}`);
+  orb.style.setProperty('--orb-thickness', `${thickness}`);
 
   backgroundRoot.appendChild(orb);
   return orb;
