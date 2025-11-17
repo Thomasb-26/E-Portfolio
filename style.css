@@ -518,6 +518,10 @@ body {
   padding-left: 2rem;
 }
 
+.timeline-actions {
+  margin-top: 0.75rem;
+}
+
 .timeline-item:nth-child(1) {
   --stagger: 0;
 }
